@@ -1,14 +1,17 @@
 """
-A utility module that reads the yaml file and returns a list of
-Module_Config objects.
+A utility module that reads the yaml file and returns a list of TaskGroup objects.
+
+Each TaskGroup represents a set of python modules to be executed in parallel.
+Each group on the list of TaskGroups is executed sequentially.
 """
+
 import yaml
-import json
-from OrderedModuleGroup import OrderedModuleGroup
-from ModuleConfigData import ModuleConfigData
+from TaskGroup import TaskGroup
+from TaskConfig import TaskConfig
+# import json
 
 # fixed key names used in the yaml file
-KEY_MODULES = 'modules'
+KEY_TASKS = 'tasks'
 KEY_FILE_PATH = 'file_path'
 KEY_BINARY_MISSION_LOG_DATA = 'binary_mission_log_data'
 KEY_BINARY_FLIGHT_LOG_DATA = 'binary_flight_log_data'
@@ -16,69 +19,73 @@ KEY_PROTOBUF_MISSION_LOG_DATA = 'protobuf_mission_log_data'
 KEY_PROTOBUF_FLIGHT_LOG_DATA = 'protobuf_flight_log_data'
 
 
-def get_module_configs(yaml_file_name):
+def get_task_group_list(yaml_file_name):
+    """Reads the given yaml config file and returns a list of TaskGroup objects."""
 
-    # the list to be returned by this function
-    list_of_module_groups = []
+    # the list to be populated and returned
+    list_of_task_groups = []
 
     f = open(yaml_file_name)
-    modules = yaml.load(f)
+    task_list = yaml.load(f)
     f.close()
-    # print('modules', type(modules))
-    # print('yaml contents', modules)
+
+    # print('modules', type(task_list))
+    # print('yaml contents', task_list)
     #
     # print('-------------------------')
-    # print('LEVEL 1: modules', type(modules))
-    # print('modules', modules)
-    # print('modules size', len(modules))
+    # print('LEVEL 1: modules', type(task_list))
+    # print('modules', task_list)
+    # print('modules size', len(task_list))
 
+    # iterate thru the task_list
+    for dict_of_tasks in task_list:
 
-    # iterate thru the list of modules
-    for dict_of_modules in modules:
-        ordered_list_of_module_config = []
-        module_group = OrderedModuleGroup(ordered_list_of_module_config)
-        list_of_module_groups.append(module_group)
+        #create the nested structure used to return the data
+        list_of_task_config = []
+        task_group = TaskGroup(list_of_task_config)
+        list_of_task_groups.append(task_group)
 
         # print('-------------MODULE GROUP-------------')
-        # print('LEVEL 2: dict_of_modules', type(dict_of_modules))
-        # print('dict_of_modules', dict_of_modules)
+        # print('LEVEL 2: dict_of_tasks', type(dict_of_tasks))
+        # print('dict_of_tasks', dict_of_tasks)
 
-        # pull the modules out of the dictionary as a list
-        # each item in the list is a dictionary keyed by 'modules'
-        list_of_modules = dict_of_modules[KEY_MODULES]
+        # now pull the tasks out of the dictionary as a list
+        # each item in the list is a dictionary keyed by 'tasks'
+        list_of_tasks = dict_of_tasks[KEY_TASKS]
 
-        # print('LEVEL 3: list_of_modules type', type(list_of_modules))
-        # print('list_of_modules', list_of_modules)
+        # print('LEVEL 3: list_of_tasks type', type(list_of_tasks))
+        # print('list_of_tasks', list_of_tasks)
 
-        for module_dict in list_of_modules:
-            # print('LEVEL 4: module_dict type', type(module_dict))
-            # print('module_dict', module_dict)
+        for task_dict in list_of_tasks:
+            # print('LEVEL 4: task_dict type', type(task_dict))
+            # print('task_dict', task_dict)
 
-            for module_name in module_dict:
-                # print('LEVEL 5: module_name type', type(module_name))
-                # print('module_name', module_name)
-                params_dict = module_dict[module_name]
-                ordered_list_of_module_config.append(ModuleConfigData(module_name, params_dict))
+            for task_name in task_dict:
+                # print('LEVEL 5: task_name type', type(task_name))
+                # print('task_name', task_name)
+                params_dict = task_dict[task_name]
+                list_of_task_config.append(TaskConfig(task_name, params_dict))
 
+                # for testing only
                 # for param_name in params_dict:
                 #     param_value = params_dict[param_name]
                 #     print(param_name, param_value)
 
-    return list_of_module_groups
+    return list_of_task_groups
 
 
 ###############################################
 # testing logic
 ###############################################
-yaml_file_name = 'yaml.yaml'
-list_of_module_groups = get_module_configs(yaml_file_name)
+yaml_file_name = 'task_list.yaml'
+list_of_task_groups = get_task_group_list(yaml_file_name)
 
-for module_group in list_of_module_groups:
-    print("-------module group-------")
-    for module_config in module_group.ordered_list_of_module_config:
-        print(module_config.module_name)
-        for key in module_config.params_dictionary:
-            print(key, module_config.params_dictionary[key])
+for task_group in list_of_task_groups:
+    print("-------task group-------")
+    for task_config in task_group.list_of_task_config:
+        print(task_config.module_name)
+        for key in task_config.params_dictionary:
+            print(key, task_config.params_dictionary[key])
 
 
 ###############################################

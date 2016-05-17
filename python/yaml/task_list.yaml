@@ -1,0 +1,23 @@
+# This yaml file specifies groups of python tasks along with their config parameters.
+# Tasks are specified in sets that are be run in parallel.
+# Each set of tasks runs before the next set of tasks is started.
+# Task parameters are specified as name/value pairs.
+# These name/value pairs are passed into each task via the Context object.
+- tasks:
+      - log_file_reader:
+          log_file_path: //Users/phil/dev/log_data/MISSION.LOG
+          binary_log_data: binary_mission_log_data
+      - log_file_reader:
+          log_file_path: //Users/phil/dev/log_data/FLIGHT.LOG
+          binary_log_data: binary_flight_log_data
+#- tasks:
+#      - log_file_reader:
+#          log_file_path: //Users/phil/dev/log_data/COMMS.LOG
+#          binary_log_data: binary_comms_log_data
+#- tasks:
+#      - log_to_proto:
+#          binary_log_data: binary_mission_log_data
+#          protobuf_log_data: protobuf_mission_log_data
+#      - log_to_proto:
+#          binary_log_data: binary_flight_log_data
+#          protobuf_log_data: protobuf_flight_log_data

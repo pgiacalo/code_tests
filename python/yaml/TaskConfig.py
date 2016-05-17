@@ -1,8 +1,9 @@
 """
 A simple data holder that is populated for each module.
+It contains the python module_name and a dictionary of module paramaters.
 The fields are populated based on the values specified in the yaml file.
 """
-class ModuleConfigData:
+class TaskConfig:
 
     def __init__(self, module_name, params_dictionary):
         self.module_name = module_name
