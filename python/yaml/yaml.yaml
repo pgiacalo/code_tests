@@ -1,0 +1,21 @@
+# This yaml file specifies the python modules to be run by orchestrator.py.
+# Modules are specified in groups to be run both in parallel.
+# Each group of modules runs before the next group of modules is started.
+# Any parameters to be passed into the module are specified here ras name/value pairs.
+# These name/value pairs are passed into each module in the Context object.
+- modules:
+      - log_file_reader:
+          file_path: /files/MISSION.LOG
+          binary_mission_log_data: binary_mission_log_data
+      - log_file_reader:
+          file_path: /files/FLIGHT.LOG
+          binary_flight_log_data: binary_flight_log_data
+- modules:
+      - log_to_proto:
+          binary_mission_log_data: binary_mission_log_data
+          protobuf_mission_log_data: protobuf_mission_log_data
+      - log_to_proto:
+          binary_flight_log_data: binary_flight_log_data
+          protobuf_flight_log_data: protobuf_flight_log_data
+
+

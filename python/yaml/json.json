@@ -1,0 +1,37 @@
+[
+  {
+    'modules':
+    [
+      {
+        'log_file_reader': {
+          'binary_mission_log_data': 'binary_mission_log_data',
+          'file_path': '/files/MISSION.LOG'
+        }
+      }
+      ,
+      {
+        'log_file_reader': {
+          'binary_flight_log_data': 'binary_flight_log_data',
+          'file_path': '/files/FLIGHT.LOG'
+        }
+      }
+    ]
+  }
+  ,
+  {
+    'modules': [
+      {
+        'log_to_proto': {
+          'binary_mission_log_data': 'binary_mission_log_data',
+          'protobuf_mission_log_data': 'protobuf_mission_log_data'
+        }
+      },
+      {
+        'log_to_proto': {
+          'binary_flight_log_data': 'binary_flight_log_data',
+          'protobuf_flight_log_data': 'protobuf_flight_log_data'
+        }
+      }
+    ]
+  }
+]

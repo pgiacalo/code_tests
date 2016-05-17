@@ -35,21 +35,20 @@ def is_prime(n):
 
 def do_serial_test():
     """Performs a prime test on the list of PRIMES serially"""
-    t1 = time.time()
     print ('Serial test starting...')
+    t1 = time.time()
     # print prime(start), prime(start + 1), prime(start + 2), prime(start + 3)
     for number in PRIMES:
         is_prime(number)
     print ('----- Serial test took %.2f seconds' % (time.time() - t1))
 
-
 def do_threading_test():
     """Performs a prime test on the list of PRIMES using thread """
     print ('Threading test starting...')
+    t1 = time.time()
     jobs = []
     for number in PRIMES:
         jobs.append(th.Thread(target=is_prime, args=([number])))
-    t1 = time.time()
     for j in jobs:
         j.start()
     for j in jobs:
@@ -60,8 +59,8 @@ def do_threading_test():
 def do_multiprocessing_pool_test():
     """Performs a prime test on the list of PRIMES using a multiprocessing pool"""
     print ('Multiprocessing Pool Test starting...')
-    pool = Pool(len(PRIMES))              # start a worker process for each prime
     t1 = time.time()
+    pool = Pool(len(PRIMES))              # start a worker process for each prime
     result = pool.map(is_prime, PRIMES)
     print ('----- Multiprocessing pool test took %.2f seconds' %(time.time() - t1))
     print('Results', result)

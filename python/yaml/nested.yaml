@@ -1,0 +1,22 @@
+- tasks:
+    - module: log_reader
+        - log_file_path: /log_data/MISSION.LOG
+        - binary_data_key_name: MISSION_LOG_BINARY_DATA
+    - module: log_reader
+        - log_file_path: /log_data/FLIGHT.LOG
+        - binary_data_key_name: FLIGHT_LOG_BINARY_DATA
+    - module: log_reader
+        - log_file_path: /log_data/COMMS.LOG
+        - binary_data_key_name: COMMS_LOG_BINARY_DATA
+    - module: log_reader
+        - log_file_path: /log_data/CATCHALL.LOG
+        - binary_data_key_name: CATCHALL_LOG_BINARY_DATA
+- tasks:
+    - module: log_to_proto
+        - binary_data_key_name: MISSION_LOG_BINARY_DATA
+    - module: log_to_proto
+        - binary_data_key_name: /log_data/FLIGHT_LOG_BINARY_DATA
+    - module: log_to_proto
+        - binary_data_key_name: /log_data/COMMS_LOG_BINARY_DATA
+    - module: log_to_proto
+        - binary_data_key_name: /log_data/CATCHALL_LOG_BINARY_DATA
