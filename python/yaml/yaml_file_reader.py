@@ -8,16 +8,7 @@ Each group on the list of TaskGroups is executed sequentially.
 import yaml
 from TaskGroup import TaskGroup
 from TaskConfig import TaskConfig
-# import json
-
-# fixed key names used in the yaml file
-KEY_TASKS = 'tasks'
-KEY_FILE_PATH = 'file_path'
-KEY_BINARY_MISSION_LOG_DATA = 'binary_mission_log_data'
-KEY_BINARY_FLIGHT_LOG_DATA = 'binary_flight_log_data'
-KEY_PROTOBUF_MISSION_LOG_DATA = 'protobuf_mission_log_data'
-KEY_PROTOBUF_FLIGHT_LOG_DATA = 'protobuf_flight_log_data'
-
+import key_names
 
 def get_task_group_list(yaml_file_name):
     """Reads the given yaml config file and returns a list of TaskGroup objects."""
@@ -51,7 +42,7 @@ def get_task_group_list(yaml_file_name):
 
         # now pull the tasks out of the dictionary as a list
         # each item in the list is a dictionary keyed by 'tasks'
-        list_of_tasks = dict_of_tasks[KEY_TASKS]
+        list_of_tasks = dict_of_tasks[key_names.KEY_TASKS]
 
         # print('LEVEL 3: list_of_tasks type', type(list_of_tasks))
         # print('list_of_tasks', list_of_tasks)

@@ -1,19 +1,14 @@
 # This yaml file specifies groups of python tasks along with their config parameters.
-# Tasks are specified in sets that are be run in parallel.
-# Each set of tasks runs before the next set of tasks is started.
-# Task parameters are specified as name/value pairs.
-# These name/value pairs are passed into each task via the Context object.
+# Tasks grouped together are executed in parallel. These must ALL have the SAME module name.
+# Each group of tasks runs before the next group of tasks is started (i.e., they are sequential groups of tasks).
+# Task parameters are specified as name/value pairs and are passed to each module's execute() function in a dictionary.
 - tasks:
       - log_file_reader:
-          log_file_path: //Users/phil/dev/log_data/MISSION.LOG
+          log_file_path: /Users/phil/dev/log_data/MISSION.LOG
           binary_log_data: binary_mission_log_data
       - log_file_reader:
-          log_file_path: //Users/phil/dev/log_data/FLIGHT.LOG
+          log_file_path: /Users/phil/dev/log_data/FLIGHT.LOG
           binary_log_data: binary_flight_log_data
-#- tasks:
-#      - log_file_reader:
-#          log_file_path: //Users/phil/dev/log_data/COMMS.LOG
-#          binary_log_data: binary_comms_log_data
 #- tasks:
 #      - log_to_proto:
 #          binary_log_data: binary_mission_log_data

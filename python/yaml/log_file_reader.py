@@ -7,10 +7,10 @@ def execute(context_and_task_params):
     # task_params = context_and_task_params[key_names.KEY_TASK_PARAMS_DICTIONARY]
 
     context = context_and_task_params[0]
-    task_params = context_and_task_params[1]
+    task_params_dictionary = context_and_task_params[1]
 
-    log_file_path = task_params[key_names.KEY_LOG_FILE_PATH]
-    binary_data_key_name = task_params[key_names.KEY_BINARY_LOG_DATA]
+    log_file_path = task_params_dictionary[key_names.KEY_LOG_FILE_PATH]
+    binary_data_key_name = task_params_dictionary[key_names.KEY_BINARY_LOG_DATA]
 
     f = open(log_file_path, 'rb')
     binary_data = f.read()

@@ -4,6 +4,7 @@ import importlib
 import key_names
 
 class Orchestrator:
+
     # @param list_of_task_groups - a list of TaskGroup objects to be run by this orchestrator
     # @param context - a Context object containing information needed at runtime
     # @return bool True means processing was successful, else false
@@ -11,6 +12,7 @@ class Orchestrator:
 
         try:
             for task_group in list_of_task_groups:
+                print('======================== NEXT TASK GROUP ========================')
                 module_name = None
                 list_of_task_config = task_group.list_of_task_config
                 pool = Pool(len(list_of_task_config))  # start a worker process for each task in the group
@@ -22,11 +24,13 @@ class Orchestrator:
                     if module_name == None:
                         module_name = task_config.module_name
                     elif module_name != task_config.module_name:
-                        print('Orchestrator.run_tasks() yaml file configuration error: all tasks grouped together to run in parallele must be the same type of module')
-                        return False;
+                        raise Exception('Orchestrator.run_tasks(): yaml file configuration error - all tasks grouped together (to run in parallel) must be the same type of module')
+
                     params_dict = task_config.params_dictionary
-                    # task_params_list.append([{key_names.KEY_TASK_CONTEXT: context, key_names.KEY_TASK_PARAMS_DICTIONARY: params_dict}])
                     task_params_list.append([context, params_dict])
+
+                    # I'd prefer to pass the parameters via a dictionary so they can be looked up. But this doesn't work (yet).
+                    # task_params_list.append([{key_names.KEY_TASK_CONTEXT: context, key_names.KEY_TASK_PARAMS_DICTIONARY: params_dict}])
 
                 # now, import the module by name and call the execute function via the multiprocessing pool
                 module = importlib.import_module(module_name)   # import the module by name
