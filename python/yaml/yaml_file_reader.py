@@ -4,8 +4,8 @@ Module_Config objects.
 """
 import yaml
 import json
-import module_group
-import module_config
+from OrderedModuleGroup import OrderedModuleGroup
+from ModuleConfigData import ModuleConfigData
 
 # fixed key names used in the yaml file
 KEY_MODULES = 'modules'
@@ -18,6 +18,9 @@ KEY_PROTOBUF_FLIGHT_LOG_DATA = 'protobuf_flight_log_data'
 
 def get_module_configs(yaml_file_name):
 
+    # the list to be returned by this function
+    list_of_module_groups = []
+
     modules = yaml.load(open(yaml_file_name))
     print('modules', type(modules))
     print('yaml contents', modules)
@@ -27,16 +30,16 @@ def get_module_configs(yaml_file_name):
     print('modules', modules)
     print('modules size', len(modules))
 
-    list_of_module_groups = []
 
     # iterate thru the list of modules
     for dict_of_modules in modules:
+        ordered_list_of_module_config = []
+        module_group = OrderedModuleGroup(ordered_list_of_module_config)
+        list_of_module_groups.append(module_group)
+
         print('-------------MODULE GROUP-------------')
         print('LEVEL 2: dict_of_modules', type(dict_of_modules))
         print('dict_of_modules', dict_of_modules)
-
-        ordered_list_of_module_config = []
-        list_of_module_groups.append(ordered_list_of_module_config)
 
         # pull the modules out of the dictionary as a list
         # each item in the list is a dictionary keyed by 'modules'
@@ -53,10 +56,11 @@ def get_module_configs(yaml_file_name):
                 print('LEVEL 5: module_name type', type(module_name))
                 print('module_name', module_name)
                 params_dict = module_dict[module_name]
+                ordered_list_of_module_config.append(ModuleConfigData(module_name, params_dict))
+
                 for param_name in params_dict:
                     param_value = params_dict[param_name]
                     print(param_name, param_value)
-                    # ordered_list_of_module_config.append(module_config(module_name, params_dict))
 
     return list_of_module_groups
 
@@ -65,12 +69,12 @@ def get_module_configs(yaml_file_name):
 ###############################################
 yaml_file_name = 'yaml.yaml'
 list_of_module_groups = get_module_configs(yaml_file_name)
-# for module_group in list_of_module_groups:
-#     print("-------modules-------")
-#     for module_config in module_group.ordered_list_of_module_config:
-#         print(module_config.module_name)
-#         for key in module_config.params_dictionary:
-#             print(key, module_config.params_dictionary[key])
+for module_group in list_of_module_groups:
+    print("-------module group-------")
+    for module_config in module_group.ordered_list_of_module_config:
+        print(module_config.module_name)
+        for key in module_config.params_dictionary:
+            print(key, module_config.params_dictionary[key])
 
 
 ###############################################
