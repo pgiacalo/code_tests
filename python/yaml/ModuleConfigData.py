@@ -11,6 +11,6 @@ class ModuleConfigData:
     def __repr__(self):
         return (self.module_name + ": " + str(self.params_dictionary))
 
-dict = {'a': 'one', 'b': "two"}
-mc = ModuleConfigData("test_module_name", dict)
-print(mc)
+# dict = {'a': 'one', 'b': "two"}
+# mc = ModuleConfigData("test_module_name", dict)
+# print(mc)

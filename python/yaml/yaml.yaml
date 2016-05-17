@@ -1,7 +1,7 @@
-# This yaml file specifies the python modules to be run by orchestrator.py.
-# Modules are specified in groups to be run both in parallel.
+# This yaml file specifies groups of python modules along with their config parameters.
+# Modules are specified in groups that are to be run in parallel.
 # Each group of modules runs before the next group of modules is started.
-# Any parameters to be passed into the module are specified here ras name/value pairs.
+# Module parameters to be passed into the module are specified as name/value pairs.
 # These name/value pairs are passed into each module in the Context object.
 - modules:
       - log_file_reader:
