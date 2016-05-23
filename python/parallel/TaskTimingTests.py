@@ -16,7 +16,7 @@ import math
 PRIMES = [
     112272535095293,
     112582705942171,
-    112272535095293,
+    112272535095297,
     1099726899285419]
 
 
@@ -40,7 +40,7 @@ def do_serial_test():
     # print prime(start), prime(start + 1), prime(start + 2), prime(start + 3)
     for number in PRIMES:
         is_prime(number)
-    print ('----- Serial test took %.2f seconds' % (time.time() - t1))
+    print ('----- Serial test took %.2f seconds' %(time.time() - t1))
 
 def do_threading_test():
     """Performs a prime test on the list of PRIMES using thread """
@@ -53,7 +53,7 @@ def do_threading_test():
         j.start()
     for j in jobs:
         j.join()
-    print ('----- Multithreaded test took %.2f seconds' % (time.time() - t1))
+    print ('----- Multithreaded test took %.2f seconds' %(time.time() - t1))
 
 
 def do_multiprocessing_pool_test():
