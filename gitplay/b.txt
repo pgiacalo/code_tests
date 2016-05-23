@@ -1,1 +1,2 @@
-This if file b.txt
+This if file b.txti
+Another line
